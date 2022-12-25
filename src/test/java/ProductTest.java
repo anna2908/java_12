@@ -99,7 +99,7 @@ public class ProductTest {
     }
 
     @Test
-    public void searchByTest() {
+    public void searchByMoreThanOneTest() {
         ProductRepository repository = new ProductRepository();
         Product book1 = new Book(1, "Словарь", 500, "Петров");
         Product book2 = new Book(2, "Словарь", 400, "Иванов");
@@ -114,7 +114,39 @@ public class ProductTest {
         expected[0] = book1;
         expected[1] = book2;
         Product[] actual = manager.searchBy("Словарь");
-        ;
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void searchByZeroTest() {
+        ProductRepository repository = new ProductRepository();
+        Product book1 = new Book(1, "Словарь", 500, "Петров");
+        Product smart = new Smartphone(3, "Samsung A53", 25000, "Samsung");
+
+        ProductManager manager = new ProductManager(repository);
+        manager.add(book1);
+        manager.add(smart);
+
+        Product[] expected = new Product[0];
+        Product[] actual = manager.searchBy("Стол");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    public void searchByOneTest() {
+        ProductRepository repository = new ProductRepository();
+        Product book1 = new Book(1, "Словарь", 500, "Петров");
+        Product smart = new Smartphone(3, "Samsung A53", 25000, "Samsung");
+
+        ProductManager manager = new ProductManager(repository);
+        manager.add(book1);
+        manager.add(smart);
+
+        Product[] expected = new Product[1];
+        expected[0] = book1;
+        Product[] actual = manager.searchBy("Словарь");
+
         Assertions.assertArrayEquals(expected, actual);
     }
 }
